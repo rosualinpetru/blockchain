@@ -1,7 +1,5 @@
 import sbt.Project.projectToRef
 
-import NativePackagerHelper.*
-
 lazy val root = Project(id = "blockchain", base = file("."))
   .aggregate(projects.map(projectToRef) *)
   .settings(sharedSettings)

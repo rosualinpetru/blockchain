@@ -24,7 +24,7 @@ object Block {
     import block.*
     Json.obj(
       "index" -> Json.fromBigInt(index),
-      "timestamp" -> Json.fromString(timestamp.toString()),
+      "timestamp" -> Json.fromString(timestamp.toString),
       "proof" -> Json.fromBigInt(proof.value),
       "previousHash" -> previousHash.map(hash => Json.fromString(hash.value)).getOrElse(Json.Null)
     ).deepDropNullValues

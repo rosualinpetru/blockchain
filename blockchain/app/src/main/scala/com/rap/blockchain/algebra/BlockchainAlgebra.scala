@@ -1,7 +1,7 @@
 package com.rap.blockchain.algebra
 
-import cats.effect.Ref
-import cats.effect.Sync
+import cats.effect.{Ref, Sync}
+import cats.effect.std.SecureRandom
 import cats.implicits.*
 import com.rap.blockchain.model.*
 import io.circe.syntax.*
@@ -10,14 +10,12 @@ import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.time.ZonedDateTime
 import scala.annotation.tailrec
-import cats.effect.std.Random
-import cats.effect.std.SecureRandom
 
 trait BlockchainAlgebra[F[_]](val blockchain: Ref[F, Block]) {
   def append(proof: Proof): F[Block]
   def proof(): F[Option[Proof]]
   def check(): F[Boolean]
-  def liniarize(): F[List[Block]]
+  def linearize(): F[List[Block]]
 }
 
 object BlockchainAlgebra:
@@ -55,7 +53,8 @@ object BlockchainAlgebra:
 
           ref.get.map(recurse)
 
-        def liniarize(): F[List[Block]] =
+        def linearize(): F[List[Block]] =
+          @tailrec
           def recurse(blockchain: Block, acc: List[Block] = List()): List[Block] =
             blockchain.previousBlock match {
               case None           => blockchain :: acc

@@ -8,12 +8,12 @@ import org.typelevel.log4cats.slf4j.Slf4jLogger
 import scala.util.Try
 
 trait Logging:
-  type Logger[F[_]] = ContextWithSourceSelfAwareStructuredLogger[F]
+  private type Logger[F[_]] = ContextWithSourceSelfAwareStructuredLogger[F]
 
   private def loggerName =
-    val nameSegments = getClass().getName().replaceAll("[^a-zA-Z0-9.]", "").split("\\.").toList
+    val nameSegments = getClass.getName.replaceAll("[^a-zA-Z0-9.]", "").split("\\.").toList
     val size         = nameSegments.size
-    assert(size >= 1 && nameSegments.forall(_ != ""))
+    assert(size >= 1 && !nameSegments.contains(""))
 
     nameSegments.take(size - 1).map(_.charAt(0).toString()).reduce(_ + "." + _) + s".${nameSegments.drop(size - 1).head}"
 

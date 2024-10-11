@@ -29,4 +29,4 @@ object Main extends IOApp.Simple with Logging:
   override def reportFailure(err: Throwable): IO[Unit] =
     getLogger[IO].error(err)("Uncaught error in thread-pool").as(())
 
-  val run = BlockchainServer.run[IO]
+  val run: IO[Unit] = BlockchainServer.run[IO]

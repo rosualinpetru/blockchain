@@ -39,7 +39,7 @@ object BlockchainRoutes:
 
       case GET -> Root / "chain" =>
         for {
-          blocks <- alg.liniarize()
+          blocks <- alg.linearize()
           resp <- Ok(Json.obj(
             "len" -> Json.fromInt(blocks.size),
             "blocks" -> Json.fromValues(blocks.map(_.asJson))

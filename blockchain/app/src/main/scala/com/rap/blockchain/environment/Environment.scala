@@ -1,11 +1,13 @@
 package com.rap.blockchain.environment
 
-enum EnvironmentVariable {
-  case SERVER_HOST
-  case SERVER_PORT
-  case MAX_ATEMPTS
-}
+import ciris.{ConfigValue, Effect}
 
 object Environment {
-  def env(envVar: EnvironmentVariable) = ciris.env(envVar.toString())
+  enum EnvironmentVariable {
+    case SERVER_HOST
+    case SERVER_PORT
+    case MAX_ATTEMPTS
+  }
+
+  def env(envVar: EnvironmentVariable): ConfigValue[Effect, String] = ciris.env(envVar.toString)
 }
